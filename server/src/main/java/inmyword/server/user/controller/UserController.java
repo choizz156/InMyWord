@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import inmyword.server.user.dto.JoinDto;
 import inmyword.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity Join(@RequestBody @Validated JoinDto joinDto) {
 		userService.signUp(joinDto);
+		log.warn("회원가입 완료");
 		return new ResponseEntity<String>("회원가입이 완료되었습니다.", HttpStatus.OK);
 	}
 }

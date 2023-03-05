@@ -6,7 +6,7 @@
         <div class="toast show  " role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <strong class="me-auto">InMyWord</strong>
-            <button @click="$router.push('/')" type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast"
+            <button @click="$router.push('/login')" type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast"
                     aria-label="Close">
               <span aria-hidden="true"></span>
             </button>
@@ -121,6 +121,12 @@ export default {
 
   methods: {
 
+    // computed: {
+    //   setDisplayName() {
+    //     return this.$store.commit('setDisplayName', this.displayName);
+    //   }
+    // },
+
     doubleCheck(input) {
 
       if (this.pwd === input) {
@@ -196,6 +202,7 @@ export default {
           (a) => {
             this.welcomeComment = a.data;
             this.register = true;
+            this.pwd='';
           }
       )
     },

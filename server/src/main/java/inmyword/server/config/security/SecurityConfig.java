@@ -1,7 +1,10 @@
-package inmyword.server.auth;
+package inmyword.server.config.security;
 
 import static org.springframework.security.config.Customizer.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import inmyword.server.config.security.handler.UserAuthSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,9 +13,14 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+	private final ObjectMapper objectMapper;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -23,10 +31,10 @@ public class SecurityConfig {
 			.csrf().disable()
 			.cors(withDefaults())
 			.formLogin()
-			.loginPage("/login-form")
-			.loginProcessingUrl("/login")
-			.failureUrl("/users/login?error")
-			.defaultSuccessUrl("/")
+			.loginProcessingUrl("/users/login")
+			.loginPage("http://localhost:8080/login-form")
+			.failureUrl("http://localhost:9090/login-form")
+			.successHandler(new UserAuthSuccessHandler(objectMapper))
 
 			.and()
 			.logout()
